@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.12.0)
+project(cxx-influxdb-example)
+find_package(InfluxDB)
+add_executable(example-influx-cxx main.cpp)
+target_link_libraries(example-influx-cxx PRIVATE InfluxData::InfluxDB)
