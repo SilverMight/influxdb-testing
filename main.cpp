@@ -71,12 +71,14 @@ int main(int argc, char * argv[]) {
     int writeCount = 0;
     
     // Iterate by line over our data 
+        uint64_t microseconds_since_epoch = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     for(const auto& line : csvData) {
         using namespace std::chrono;
 
         // This takes the first field of the data (which is a timestamp) and puts it into a timepoint
         // (Since we read it in as a double, we must cast to an int)
-        time_point<system_clock, nanoseconds> time {nanoseconds(static_cast<int>(line[0]))};
+        uint64_t microseconds_since_epoch = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+        time_point<system_clock, nanoseconds> time {nanoseconds(microseconds_since_epoch + (static_cast<int>(line[0])))};
         
         // Point of measurement, stores fields and timestamp
         auto point = influxdb::Point("Data");
